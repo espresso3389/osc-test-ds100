@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "Dart Debug",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/bin/",
+            "program": "${workspaceFolder}/bin/osc_test.dart",
+        }
+    ]
+}
