@@ -8,10 +8,6 @@ void main(List<String> arguments) async {
       destination: InternetAddress.tryParse("192.168.0.60"),
       destinationPort: 50010);
 
-  final lastTime = List.generate(64, (index) => 0);
-  final count = List.generate(64, (index) => 0);
-  final sum = List.generate(64, (index) => 0);
-
   final udp = await UDP.bind(Endpoint.any(port: Port(50011)));
   udp.asStream().listen((event) {
     if (event == null) return;
@@ -20,14 +16,7 @@ void main(List<String> arguments) async {
       final ch =
           int.parse(msg.address.substring(msg.address.lastIndexOf('/') + 1));
       final level = msg.arguments[0] as double;
-      final last = lastTime[ch - 1];
-      final now = DateTime.now().millisecondsSinceEpoch;
-      lastTime[ch - 1] = now;
-      if (last == 0) return;
-      final dur = now - last;
-      count[ch - 1]++;
-      sum[ch - 1] += dur;
-      //print('$ch,$level,$dur');
+      print('$ch,$level');
     } catch (e) {
       print(e);
     }
@@ -41,8 +30,5 @@ void main(List<String> arguments) async {
           arguments: []));
     }
     await Future.delayed(Duration(milliseconds: 50));
-  }
-  for (int ch = 0; ch < 64; ch++) {
-    print('$ch: ${sum[ch] / count[ch]}');
   }
 }
