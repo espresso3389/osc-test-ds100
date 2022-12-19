@@ -27,7 +27,7 @@ void main(List<String> arguments) async {
     }
   });
 
-  await soc.send(OSCMessage("/dbaudio1/matrixnode/enable/1/6", arguments: []));
+  await soc.send(OSCMessage("/dbaudio1/matrixnode/enable/1/6", arguments: [1]));
 
   soc.send(
       OSCMessage("/dbaudio1/matrixinput/levelmeterpremute/1", arguments: []));
