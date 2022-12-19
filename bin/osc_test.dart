@@ -17,6 +17,11 @@ void main(List<String> arguments) async {
           int.parse(msg.address.substring(msg.address.lastIndexOf('/') + 1));
       final level = msg.arguments[0] as double;
       print('$ch,$level');
+      Future.delayed(
+          Duration(milliseconds: 50),
+          () => soc.send(OSCMessage(
+              "/dbaudio1/matrixinput/levelmeterpremute/$ch",
+              arguments: [])));
     } catch (e) {
       print(e);
     }
@@ -24,11 +29,7 @@ void main(List<String> arguments) async {
 
   await soc.send(OSCMessage("/dbaudio1/matrixnode/enable/1/6", arguments: []));
 
-  for (int i = 0; i < 100; i++) {
-    for (int ch = 0; ch < 64; ch++) {
-      soc.send(OSCMessage("/dbaudio1/matrixinput/levelmeterpremute/${ch + 1}",
-          arguments: []));
-    }
-    await Future.delayed(Duration(milliseconds: 50));
-  }
+  soc.send(
+      OSCMessage("/dbaudio1/matrixinput/levelmeterpremute/1", arguments: []));
+  await Future.delayed(Duration(milliseconds: 500000));
 }
